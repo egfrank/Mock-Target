@@ -1,0 +1,7 @@
+project_name="account"
+
+service_home="/src/service"
+virtual_env="venv"
+database_name="account_service"
+database_user="account_service"
+database_password="devPASSWORD"
