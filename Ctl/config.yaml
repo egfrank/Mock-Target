@@ -26,14 +26,14 @@ ctl:
         # template root directory (path)
         source: {{ ctx.cachedir }}/github.com/egfrank/Mock-Template
         # template output directory (path)
-        output: output
+        output: {{ ctx.home }}/..
         walk_dirs:
           - Ctl
           - Base
         vars:
           - Ctl/tmplvars.yaml
-        # ignore:
-        #   - \.sh$
+        ignore:
+          - .git$
 
     # chain plugin
     - name: chain_template
@@ -53,12 +53,32 @@ ctl:
           - stage: template
             plugin: template
 
-    - name: delete
+          - stage: move
+            plugin: move
+
+          - stage: clean
+            plugin: clean
+
+    - name: move
       type: command
       config:
         shell: true
         command:
-          - rm -rf output
+          - mv -vn Base/* Base/.* .
+
+    - name: clean
+      type: command
+      config:
+        shell: true
+        command:
+          - rm -rf Base Ctl/tmp
+
+    - name: reset
+      type: command
+      config:
+        shell: true
+        command:
+          - rm -rf Ctl/dev Ctl/docker Ctl/tmp Base tox.ini
   permissions:
     - namespace: ctl
       permission: crud
