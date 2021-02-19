@@ -28,12 +28,11 @@ ctl:
         # template output directory (path)
         output: {{ ctx.home }}/..
         walk_dirs:
-          - Ctl
-          - Base
+          - .
         vars:
           - Ctl/tmplvars.yaml
         ignore:
-          - .git$
+          - git
 
     # chain plugin
     - name: chain_template
@@ -53,25 +52,15 @@ ctl:
           - stage: template
             plugin: template
 
-          - stage: move
-            plugin: move
-
           - stage: clean
             plugin: clean
-
-    - name: move
-      type: command
-      config:
-        shell: true
-        command:
-          - mv -vn Base/* Base/.* .
 
     - name: clean
       type: command
       config:
         shell: true
         command:
-          - rm -rf Base Ctl/tmp
+          - rm -rf Ctl/tmp
 
     - name: reset
       type: command
