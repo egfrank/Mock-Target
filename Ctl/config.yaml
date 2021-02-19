@@ -32,7 +32,7 @@ ctl:
         vars:
           - Ctl/tmplvars.yaml
         ignore:
-          - git
+          - \.git/
 
     # chain plugin
     - name: chain_template
